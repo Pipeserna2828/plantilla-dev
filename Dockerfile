@@ -1,11 +1,16 @@
-FROM python:3.11.2
+FROM python:3.11-slim
 
 WORKDIR /app
 
-COPY . /app
+# Poetry
+RUN pip install --no-cache-dir poetry
 
-RUN pip install -r requirements.txt
+COPY pyproject.toml poetry.lock* /app/
+RUN poetry install --no-interaction --no-ansi
+
+COPY src /app/src
+COPY README.md /app/README.md
 
 EXPOSE 8000
 
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["poetry", "run", "uvicorn", "src.api.app:app", "--host", "0.0.0.0", "--port", "8000"]
