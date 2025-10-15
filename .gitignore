@@ -129,4 +129,7 @@ dmypy.json
 .pyre/
 
 # Sonar Scanner
+.scannerwork/# Sonar
+sonar-project.properties
 .scannerwork/
+.sonar/
